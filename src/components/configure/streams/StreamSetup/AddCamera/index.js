@@ -152,28 +152,6 @@ const AddCamera = ({ open, setOpen }) => {
                   )}
                 </div>
               </Stack>
-              <Stack
-                direction='row'
-                spacing={3}
-                alignItems='center'
-                sx={{ mt: 2 }}
-              >
-                <Typography>Blink</Typography>
-                <Toggle
-                  {...register('blankStatus')}
-                  onChange={(e) => {
-                    setValue('blankStatus', e.target.checked ? 1 : 0);
-                  }}
-                  checked={watch('blankStatus')}
-                />
-                <div>
-                  {errors?.blankStatus && (
-                    <FormHelperText sx={{ color: 'red' }}>
-                      {errors.blankStatus.message}
-                    </FormHelperText>
-                  )}
-                </div>
-              </Stack>
             </Box>
 
             {/* submit button */}

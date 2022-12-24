@@ -7,6 +7,8 @@ import Table from './Table';
 
 const StreamSetup = () => {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
   return (
     <Box>
       <Card
@@ -15,8 +17,8 @@ const StreamSetup = () => {
         hasButton
         button={<CreateButton setOpen={setOpen} />}
       >
-        <Form />
-        <Table />
+        <Form value={value} setValue={setValue} />
+        <Table value={value} />
       </Card>
       <AddCamera open={open} setOpen={setOpen} />
     </Box>

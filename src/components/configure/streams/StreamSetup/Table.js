@@ -2,7 +2,7 @@ import { Box, Stack } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import * as React from 'react';
 import { useState } from 'react';
-import { FaCamera, FaPen, FaTrashAlt } from 'react-icons/fa';
+import { FaPen, FaTrashAlt } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteStreamAsync } from '../../../../features/stream/thunks';
 import EditCamera from './EditCamera';
@@ -10,28 +10,7 @@ import EditCamera from './EditCamera';
 const columns = [
   { field: 'cameraName', headerName: 'Camera Name', flex: 1 },
   { field: 'ipAddress', headerName: 'Ip', flex: 2 },
-  {
-    headerName: 'Icon',
-    width: 100,
-    flex: 1,
-    field: 'icon',
-    sortable: false,
-    renderCell: (props) => {
-      //   const { row } = props;
 
-      return (
-        <>
-          <Box
-            as='p'
-            sx={{ fontSize: '20px', color: 'gray' }}
-            to={`/dashboard`}
-          >
-            <FaCamera />
-          </Box>
-        </>
-      );
-    },
-  },
   {
     headerName: 'Action',
     field: 'action',
@@ -83,7 +62,7 @@ const columns = [
   },
 ];
 
-export default function Table() {
+export default function Table({ value }) {
   const [itemPerPage, setItemPerPage] = useState(10);
   const [selectedId, setSelectedId] = React.useState(null);
   const [open, setOpen] = useState(false);
@@ -94,11 +73,18 @@ export default function Table() {
 
   const streamSetup = React.useMemo(() => {
     if (streams.length === 0) return [];
+
     return streams.reduce((acc, cur) => {
-      acc.push({ ...cur, dispatch, setOpen, setSelectedId });
+      if (!value) {
+        acc.push({ ...cur, dispatch, setOpen, setSelectedId });
+      } else {
+        if (cur.cameraName.toLowerCase().includes(value.toLowerCase())) {
+          acc.push({ ...cur, dispatch, setOpen, setSelectedId });
+        }
+      }
       return acc;
     }, []);
-  }, [streams, dispatch]);
+  }, [streams, dispatch, value]);
 
   return (
     <Box sx={{ mt: 4 }}>
