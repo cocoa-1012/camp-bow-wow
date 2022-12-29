@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material';
 import React, { useState } from 'react';
 import Card from '../../Card';
 import AddCamera from './AddCamera';
+import CameraUrl from './CamerUrl';
 import Form from './Form';
 import Table from './Table';
 
@@ -11,6 +12,9 @@ const StreamSetup = () => {
 
   return (
     <Box>
+      <Card title='Default Camera Url' color='#6087d4'>
+        <CameraUrl value={value} setValue={setValue} />
+      </Card>
       <Card
         title='Stream Setup'
         color='#6087d4'
