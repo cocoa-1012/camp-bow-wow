@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import React from 'react';
 
-const Form = () => {
+const Form = ({ value = '', setValue }) => {
   return (
     <div>
       <Stack direction='row' gap={4} sx={{ py: '12px' }}>
@@ -12,26 +12,11 @@ const Form = () => {
               InputLabelProps={{
                 shrink: true,
               }}
-              label='Lan Address'
+              label='Camera'
               variant='outlined'
               placeholder='Input here'
-              defaultValue={'127.0.0.1'}
-              fullWidth
-            />
-          </Box>
-        </div>
-
-        <div>
-          <Box sx={{ flex: 1 }}>
-            <TextField
-              InputLabelProps={{
-                shrink: true,
-              }}
-              type='number'
-              label='Port'
-              variant='outlined'
-              placeholder={'Port'}
-              value={8000}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
               fullWidth
             />
           </Box>

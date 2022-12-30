@@ -29,11 +29,9 @@ const EditCamera = ({ open, setOpen, id }) => {
     reset,
   } = useForm({
     defaultValues: {
-      status: cameraData?.status || 0,
-      blankStatus: cameraData?.blankStatus || 0,
+      status: cameraData?.status || 1,
+      isGroup: cameraData?.isGroup || false,
       cameraName: cameraData?.cameraName || '',
-      ipAddress: cameraData?.ipAddress || '',
-      backDisplay: cameraData?.backDisplay || 0,
     },
   });
 
@@ -76,7 +74,9 @@ const EditCamera = ({ open, setOpen, id }) => {
           <form onSubmit={handleSubmit(submitHandler)}>
             <Box as='div' sx={{ width: '100%' }}>
               <div>
-                <Typography>Web Cams:</Typography>
+                <Typography>
+                  Web Cams {watch('isGroup') ? '(Group)' : ''} :
+                </Typography>
                 <OutlinedInput
                   id='component-outlined'
                   {...register('cameraName', {
@@ -94,24 +94,6 @@ const EditCamera = ({ open, setOpen, id }) => {
                 </div>
               </div>
 
-              <div>
-                <Typography>IP Address:</Typography>
-                <OutlinedInput
-                  id='component-outlined'
-                  {...register('ipAddress', {
-                    required: 'This field is required!',
-                  })}
-                  fullWidth
-                  size='small'
-                />
-                <div>
-                  {errors?.ipAddress && (
-                    <FormHelperText sx={{ color: 'red' }}>
-                      {errors.ipAddress.message}
-                    </FormHelperText>
-                  )}
-                </div>
-              </div>
               <Stack
                 direction='row'
                 spacing={3}
@@ -124,6 +106,7 @@ const EditCamera = ({ open, setOpen, id }) => {
                   onChange={(e) => {
                     setValue('status', e.target.checked ? 1 : 0);
                   }}
+                  defaultChecked
                   checked={watch('status')}
                 />
                 <div>
@@ -134,46 +117,26 @@ const EditCamera = ({ open, setOpen, id }) => {
                   )}
                 </div>
               </Stack>
+
               <Stack
                 direction='row'
                 spacing={3}
                 alignItems='center'
                 sx={{ mt: 2 }}
               >
-                <Typography>Blink</Typography>
+                <Typography>Group </Typography>
                 <Toggle
-                  {...register('backDisplay')}
+                  {...register('isGroup')}
                   onChange={(e) => {
-                    setValue('backDisplay', e.target.checked ? 1 : 0);
+                    setValue('isGroup', e.target.checked);
                   }}
-                  checked={watch('backDisplay')}
+                  defaultChecked={true}
+                  checked={watch('isGroup')}
                 />
                 <div>
-                  {errors?.backDisplay && (
+                  {errors?.isGroup && (
                     <FormHelperText sx={{ color: 'red' }}>
-                      {errors.backDisplay.message}
-                    </FormHelperText>
-                  )}
-                </div>
-              </Stack>
-              <Stack
-                direction='row'
-                spacing={3}
-                alignItems='center'
-                sx={{ mt: 2 }}
-              >
-                <Typography>Blink</Typography>
-                <Toggle
-                  {...register('blankStatus')}
-                  onChange={(e) => {
-                    setValue('blankStatus', e.target.checked ? 1 : 0);
-                  }}
-                  checked={watch('blankStatus')}
-                />
-                <div>
-                  {errors?.blankStatus && (
-                    <FormHelperText sx={{ color: 'red' }}>
-                      {errors.blankStatus.message}
+                      {errors.isGroup.message}
                     </FormHelperText>
                   )}
                 </div>

@@ -24,6 +24,8 @@ const AllCameraListContainer = () => {
   );
 };
 
+export default AllCameraListContainer;
+
 const NoSlideShow = () => {
   const { data: config, isSuccess } = useGetConfigsQuery();
 
@@ -60,5 +62,3 @@ const TopBottom = (isTop = false) => {
     </>
   );
 };
-
-export default AllCameraListContainer;

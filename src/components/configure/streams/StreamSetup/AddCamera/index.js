@@ -26,11 +26,9 @@ const AddCamera = ({ open, setOpen }) => {
     reset,
   } = useForm({
     defaultValues: {
-      status: 0,
-      blankStatus: 0,
+      status: 1,
+      isGroup: false,
       cameraName: '',
-      ipAddress: '',
-      backDisplay: 0,
     },
   });
 
@@ -40,6 +38,8 @@ const AddCamera = ({ open, setOpen }) => {
       ...values,
       userId: getAuthUserId(),
     };
+    console.log(data);
+
     dispatch(
       addStreamAsync({
         data,
@@ -57,7 +57,10 @@ const AddCamera = ({ open, setOpen }) => {
     <div>
       <Modal
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          reset();
+          setOpen(false);
+        }}
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
@@ -72,7 +75,9 @@ const AddCamera = ({ open, setOpen }) => {
           <form onSubmit={handleSubmit(submitHandler)}>
             <Box as='div' sx={{ width: '100%' }}>
               <div>
-                <Typography>Web Cams:</Typography>
+                <Typography>
+                  Web Cams {watch('isGroup') ? '(Group)' : ''} :
+                </Typography>
                 <OutlinedInput
                   id='component-outlined'
                   {...register('cameraName', {
@@ -90,24 +95,6 @@ const AddCamera = ({ open, setOpen }) => {
                 </div>
               </div>
 
-              <div>
-                <Typography>IP Address:</Typography>
-                <OutlinedInput
-                  id='component-outlined'
-                  {...register('ipAddress', {
-                    required: 'This field is required!',
-                  })}
-                  fullWidth
-                  size='small'
-                />
-                <div>
-                  {errors?.ipAddress && (
-                    <FormHelperText sx={{ color: 'red' }}>
-                      {errors.ipAddress.message}
-                    </FormHelperText>
-                  )}
-                </div>
-              </div>
               <Stack
                 direction='row'
                 spacing={3}
@@ -120,6 +107,7 @@ const AddCamera = ({ open, setOpen }) => {
                   onChange={(e) => {
                     setValue('status', e.target.checked ? 1 : 0);
                   }}
+                  defaultChecked
                   checked={watch('status')}
                 />
                 <div>
@@ -130,46 +118,26 @@ const AddCamera = ({ open, setOpen }) => {
                   )}
                 </div>
               </Stack>
+
               <Stack
                 direction='row'
                 spacing={3}
                 alignItems='center'
                 sx={{ mt: 2 }}
               >
-                <Typography>Blink</Typography>
+                <Typography>Group </Typography>
                 <Toggle
-                  {...register('backDisplay')}
+                  {...register('isGroup')}
                   onChange={(e) => {
-                    setValue('backDisplay', e.target.checked ? 1 : 0);
+                    setValue('isGroup', e.target.checked);
                   }}
-                  checked={watch('backDisplay')}
+                  defaultChecked={true}
+                  checked={watch('isGroup')}
                 />
                 <div>
-                  {errors?.backDisplay && (
+                  {errors?.isGroup && (
                     <FormHelperText sx={{ color: 'red' }}>
-                      {errors.backDisplay.message}
-                    </FormHelperText>
-                  )}
-                </div>
-              </Stack>
-              <Stack
-                direction='row'
-                spacing={3}
-                alignItems='center'
-                sx={{ mt: 2 }}
-              >
-                <Typography>Blink</Typography>
-                <Toggle
-                  {...register('blankStatus')}
-                  onChange={(e) => {
-                    setValue('blankStatus', e.target.checked ? 1 : 0);
-                  }}
-                  checked={watch('blankStatus')}
-                />
-                <div>
-                  {errors?.blankStatus && (
-                    <FormHelperText sx={{ color: 'red' }}>
-                      {errors.blankStatus.message}
+                      {errors.isGroup.message}
                     </FormHelperText>
                   )}
                 </div>

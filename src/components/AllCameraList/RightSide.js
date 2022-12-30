@@ -72,10 +72,10 @@ const RightSide = () => {
 
     const name = config[0].cameraDisplay;
     const cameraData = LAYOUT_ITEMS_WITH_NAME.find((i) => i.name === name);
-    console.log({ row: cameraData.rowCount, col: cameraData.columnCount });
+
     return {
-      row: cameraData.rowCount,
-      col: cameraData.columnCount,
+      row: cameraData?.rowCount || 3,
+      col: cameraData?.columnCount || 3,
     };
   }, [config, isSuccess]);
 

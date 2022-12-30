@@ -2,6 +2,7 @@ import { Box } from '@mui/system';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import messageSound from '../../assets/sounds/new-message.mp3';
+import useInnerSize from '../../hooks/useInnerSize';
 
 const Item = ({ date, text, height = 100 }) => {
   const [isBlink, setIsBlink] = useState(false);
@@ -19,6 +20,8 @@ const Item = ({ date, text, height = 100 }) => {
     };
   }, []);
 
+  const { width } = useInnerSize();
+
   useEffect(() => {
     const audio = new Audio(messageSound);
     audio.play();
@@ -26,13 +29,18 @@ const Item = ({ date, text, height = 100 }) => {
 
   const fontSize = useMemo(() => {
     if (!text) return 0;
-    if (text.length > 99) return 25;
-    if (text.length > 79) return 35;
-    if (text.length > 49) return 45;
-    if (text.length > 36) return 45;
-    if (text.length > 19) return 50;
-    return 60;
-  }, [text]);
+    let mul = 1;
+    if (width > 1300) mul = 2;
+    if (width > 1700) mul = 3;
+    if (width > 2100) mul = 4;
+    if (width > 2500) mul = 5.5;
+    if (text.length > 99) return 25 * mul;
+    if (text.length > 79) return 35 * mul;
+    if (text.length > 49) return 45 * mul;
+    if (text.length > 36) return 45 * mul;
+    if (text.length > 19) return 50 * mul;
+    return 60 * mul;
+  }, [text, width]);
 
   return (
     <Box>
