@@ -75,9 +75,7 @@ const AddCamera = ({ open, setOpen }) => {
           <form onSubmit={handleSubmit(submitHandler)}>
             <Box as='div' sx={{ width: '100%' }}>
               <div>
-                <Typography>
-                  Web Cams {watch('isGroup') ? '(Group)' : ''} :
-                </Typography>
+                <Typography>Camera Name or Group Name</Typography>
                 <OutlinedInput
                   id='component-outlined'
                   {...register('cameraName', {

@@ -9,8 +9,6 @@ import EditCamera from './EditCamera';
 
 const columns = [
   { field: 'cameraName', headerName: 'Camera Name', flex: 1 },
-  { field: 'ipAddress', headerName: 'Ip', flex: 2 },
-
   {
     headerName: 'Action',
     field: 'action',

@@ -65,7 +65,7 @@ const CameraUrl = () => {
         </>
         <Box sx={styles.submitButton}>
           <Button variant='contained' type='submit'>
-            Add Camera
+            Save
           </Button>
         </Box>
       </Stack>

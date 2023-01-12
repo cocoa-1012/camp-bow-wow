@@ -12,7 +12,7 @@ const StreamSetup = () => {
 
   return (
     <Box>
-      <Card title='Default Camera Url' color='#6087d4'>
+      <Card title='Public DVR Url' color='#6087d4'>
         <CameraUrl value={value} setValue={setValue} />
       </Card>
       <Card
